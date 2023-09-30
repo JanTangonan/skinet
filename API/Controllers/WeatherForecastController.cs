@@ -4,6 +4,7 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[ApiExplorerSettings(IgnoreApi = true)]                         //this is to ignore this API controller
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]

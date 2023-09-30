@@ -1,4 +1,5 @@
 using API.Dtos;
+using API.Errors;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -9,9 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+    public class ProductsController : BaseApiController
     {
         private readonly IGenericRepository<Product> productsRepo;
         private readonly IGenericRepository<ProductBrand> productBrandRepo;
@@ -40,10 +39,14 @@ namespace API.Controllers
         }   
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]            //this is to tell SWAGGER about the responses
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {   
             var spec = new ProductsWithTypesAndBrandsSpecification(id);  
             var product = await productsRepo.GetEntityWithSpec(spec);
+
+            if (product == null) return NotFound(new ApiResponse(404));
 
             return mapper.Map<Product, ProductToReturnDto>(product);
         }
