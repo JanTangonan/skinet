@@ -20,6 +20,21 @@ namespace Infrastructure.Data
                 query = query.Where(spec.Criteria); // p => p.ProductTypeId == id
             }
 
+            if (spec.OrderBy != null)
+            {
+                query = query.OrderBy(spec.OrderBy);
+            }
+            
+            if (spec.OrderByDescending != null) 
+            {
+                query = query.OrderByDescending(spec.OrderByDescending);
+            }
+
+            if (spec.IsPagingEnabled)
+            {
+                query = query.Skip(spec.Skip).Take(spec.Take);
+            }
+
             //this will return all the includes in the ProductRepository
             // return await context.Products
             //     .Include(p => p.ProductType)
