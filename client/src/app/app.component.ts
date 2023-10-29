@@ -1,7 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { IProduct } from './models/product';
-import { IPagination } from './models/pagination';
 
 @Component({
   selector: 'app-root',
@@ -9,17 +6,11 @@ import { IPagination } from './models/pagination';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'Skinet';
-  products: IProduct[] = [];
+  title = 'Jumba Store';
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
   ngOnInit(): void {  //take note that URL must be the same with URL from CORS policy from program.cs
-    this.http.get('https://localhost:5295/api/products?pageSize=50').subscribe(
-      (response: IPagination) => {
-      this.products = response.data;
-    }, error => {
-      console.log(error);
-    });
+    
   }   
 }   
