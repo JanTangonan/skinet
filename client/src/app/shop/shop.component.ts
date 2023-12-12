@@ -11,6 +11,7 @@ import { ShopParams } from '../shared/models/shopParams';
   styleUrls: ['./shop.component.scss']
 })
 export class ShopComponent {
+  @ViewChild('search', {static: false}) searchTerm: ElementRef;
   products: IProduct [] = [];
   brands: IBrand [] = [];
   types: IType [] = [];
@@ -21,7 +22,7 @@ export class ShopComponent {
     {name: 'Price: Low to High', value: 'priceAsc'},
     {name: 'Price: High to Low', value: 'priceDesc'}
   ];
-  @ViewChild('search', {static: true}) searchTerm: ElementRef;
+  
 
   constructor(private shopService: ShopService) { }
 
